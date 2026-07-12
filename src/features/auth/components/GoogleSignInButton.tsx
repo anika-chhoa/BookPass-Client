@@ -16,6 +16,7 @@ declare global {
 }
 
 const CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
+let googleInitialized = false;
 
 export function GoogleSignInButton() {
   const { googleLogin } = useAuth();
@@ -26,13 +27,16 @@ export function GoogleSignInButton() {
     if (!CLIENT_ID || !containerRef.current) return;
     const tryRender = () => {
       if (!window.google || !containerRef.current) return false;
-      window.google.accounts.id.initialize({
-        client_id: CLIENT_ID,
-        callback: async (res) => {
-          await googleLogin(res.credential);
-          navigate("/");
-        },
-      });
+      if (!googleInitialized) {
+        window.google.accounts.id.initialize({
+          client_id: CLIENT_ID,
+          callback: async (res) => {
+            await googleLogin(res.credential);
+            navigate("/");
+          },
+        });
+        googleInitialized = true;
+      }
       window.google.accounts.id.renderButton(containerRef.current, {
         theme: "outline",
         size: "large",

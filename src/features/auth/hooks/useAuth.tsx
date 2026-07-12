@@ -12,7 +12,6 @@ interface AuthContextValue {
 const AuthContext = createContext<AuthContextValue | null>(null);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const googleLogin = async (idToken: string) => setUser(await apiGoogleLogin(idToken));
   const [user, setUser] = useState<AuthUser | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -22,8 +21,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const login = async (email: string, password: string) => setUser(await apiLogin(email, password));
   const register = async (name: string, email: string, password: string) => setUser(await apiRegister(name, email, password));
+  const googleLogin = async (idToken: string) => setUser(await apiGoogleLogin(idToken));
   const logout = async () => { await apiLogout(); setUser(null); };
-  
 
   return <AuthContext.Provider value={{ user, loading, login, register, googleLogin, logout }}>{children}</AuthContext.Provider>;
 }
