@@ -2,6 +2,7 @@ import { useState, type FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/Button";
 import { useAuth } from "../hooks/useAuth";
+import { GoogleSignInButton } from "./GoogleSignInButton";
 
 export function RegisterForm() {
   const { register } = useAuth();
@@ -56,6 +57,12 @@ export function RegisterForm() {
       <Button type="submit" isLoading={loading} loadingText="Creating account...">
         Create Account
       </Button>
+      <div className="flex items-center gap-md text-on-surface-variant font-label-sm text-label-sm">
+        <span className="flex-1 border-t border-outline-variant" />
+        or
+        <span className="flex-1 border-t border-outline-variant" />
+      </div>
+      <GoogleSignInButton />
     </form>
   );
 }

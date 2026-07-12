@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/Button";
 import { useState, type FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
+import { GoogleSignInButton } from "./GoogleSignInButton";
 
 const DEMO_EMAIL = "demo@libro.com";
 const DEMO_PASSWORD = "Demo1234!";
@@ -83,6 +84,12 @@ export function LoginForm() {
       >
         Try Demo Account
       </Button>
+      <div className="flex items-center gap-md text-on-surface-variant font-label-sm text-label-sm">
+        <span className="flex-1 border-t border-outline-variant" />
+        or
+        <span className="flex-1 border-t border-outline-variant" />
+      </div>
+      <GoogleSignInButton />
     </form>
   );
 }

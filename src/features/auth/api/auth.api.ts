@@ -13,6 +13,11 @@ export async function apiLogin(email: string, password: string) {
   setAccessToken(data.accessToken);
   return data.user;
 }
+export async function apiGoogleLogin(idToken: string) {
+  const data = await apiFetch<AuthResult>("/auth/google", { method: "POST", body: JSON.stringify({ idToken }) });
+  setAccessToken(data.accessToken);
+  return data.user;
+}
 export async function apiRefresh() {
   const data = await apiFetch<AuthResult>("/auth/refresh", { method: "POST" });
   setAccessToken(data.accessToken);
