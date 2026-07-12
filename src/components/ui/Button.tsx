@@ -15,10 +15,11 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const variantClasses: Record<Variant, string> = {
-  primary: "bg-primary text-white hover:brightness-95 active:scale-95",
-  secondary: "bg-secondary text-white hover:brightness-95 active:scale-95",
+  primary: "bg-primary !text-white hover:brightness-95 active:scale-95",
+  secondary: "bg-secondary !text-white hover:brightness-95 active:scale-95",
   ghost: "bg-transparent text-on-surface hover:bg-surface-container",
-  outline: "bg-transparent border-2 border-primary text-primary hover:bg-primary hover:text-white",
+  outline:
+    "bg-transparent border-2 border-primary text-primary hover:bg-primary hover:text-white",
 };
 
 const sizeClasses: Record<Size, string> = {
@@ -27,11 +28,6 @@ const sizeClasses: Record<Size, string> = {
   lg: "px-xl py-md text-label-md",
 };
 
-/**
- * The single Button primitive. `isLoading` is built in from Phase 0 — every
- * async action (Book Now, Add to Favorite, Login submit, Add Item submit,
- * Stripe checkout) uses this prop instead of a custom local spinner.
- */
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   (
     {
