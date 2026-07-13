@@ -2,17 +2,6 @@ import { type ReactNode, type HTMLAttributes } from "react";
 import { cn } from "@/lib/utils";
 import { CARD_RADIUS, CARD_HOVER, CARD_PADDING } from "@/constants/theme";
 
-/**
- * THE card primitive. Every card in the app — book cards, category cards,
- * stat cards, dashboard cards, admin table wrappers — renders through this.
- *
- * Radius, hover behavior, and base surface styling are hardcoded here, NOT
- * exposed as props. This is intentional (see STYLE_GUIDE.md "strict uniformity"
- * decision) — do not add a `radius` prop to this component.
- *
- * Variation between card *types* comes from composition (children/slots),
- * never from copy-pasting Tailwind classes into a new component.
- */
 
 interface CardProps extends HTMLAttributes<HTMLDivElement> {
   children: ReactNode;

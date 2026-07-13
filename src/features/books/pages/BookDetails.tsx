@@ -12,6 +12,7 @@ import {
   apiAddFavorite,
   apiRemoveFavorite,
 } from "@/features/favorites/api/favorites.api";
+import { ReviewSection } from "@/features/reviews/components/ReviewSection";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -167,10 +168,10 @@ export default function BookDetails() {
           </div>
         </div>
       </div>
-
+      <ReviewSection bookId={book.id} />
       {related.length > 0 && (
         <>
-          <h2 className="font-headline-md text-headline-md text-primary mb-md">
+          <h2 className="font-headline-md text-headline-md text-primary mb-md mt-12">
             Related Books
           </h2>
           <div className={`grid ${GRID_BREAKPOINTS.browseBooks} ${GRID_GAP}`}>
@@ -184,6 +185,7 @@ export default function BookDetails() {
           </div>
         </>
       )}
+      
     </Container>
   );
 }

@@ -1,15 +1,11 @@
 import { cn } from "@/lib/utils";
 import { CARD_RADIUS, CARD_PADDING } from "@/constants/theme";
 
-/** Base pulsing block — every skeleton variant is built from this. */
+
 export function Skeleton({ className }: { className?: string }) {
   return <div className={cn("animate-pulse bg-surface-container-high", CARD_RADIUS, className)} />;
 }
 
-/**
- * Matches the real Card + CardCover dimensions exactly, so a book/category/stat
- * grid never "jumps" when skeletons are swapped for real data.
- */
 export function SkeletonCard() {
   return (
     <div className={cn("bg-surface-container-lowest border border-outline-variant flex flex-col h-full", CARD_RADIUS, CARD_PADDING)}>

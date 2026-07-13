@@ -2,10 +2,10 @@ import { cn } from "@/lib/utils";
 
 export function RatingStars({
   rating = 0,
-  reviewCount,
+  reviewCount=0,
   size = "sm",
 }: {
-  rating: number;
+  rating?: number;
   reviewCount?: number;
   size?: "sm" | "md";
 }) {
@@ -34,7 +34,7 @@ export function RatingStars({
         })}
       </div>
       <span className="font-label-sm text-label-sm text-on-surface-variant">
-        {rating.toFixed(1)}
+        {(rating ?? 0).toFixed(1)}
         {typeof reviewCount === "number" && ` (${reviewCount})`}
       </span>
     </div>
