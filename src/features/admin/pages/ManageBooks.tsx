@@ -45,7 +45,7 @@ export default function ManageBooks() {
           <table className="w-full text-left">
             <thead className="bg-surface-container-low">
               <tr className="font-label-sm text-label-sm text-on-surface-variant">
-                <th className="p-md">Cover</th><th className="p-md">Title</th><th className="p-md">Category</th><th className="p-md">Price</th><th className="p-md">Copies</th><th className="p-md">Actions</th>
+                <th className="p-md">Cover</th><th className="p-md">Title</th><th className="p-md">Category</th><th className="p-md">Copies</th><th className="p-md">Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -54,7 +54,6 @@ export default function ManageBooks() {
                   <td className="p-md"><img src={book.coverUrl} alt={book.title} className="w-10 aspect-[3/4] object-cover rounded" /></td>
                   <td className="p-md">{book.title}</td>
                   <td className="p-md">{book.category}</td>
-                  <td className="p-md">${book.price.toFixed(2)}</td>
                   <td className="p-md">{book.availableCopies}/{book.totalCopies}</td>
                   <td className="p-md">
                     <div className="flex gap-sm">

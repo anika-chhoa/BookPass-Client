@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 
 export function RatingStars({
-  rating,
+  rating = 0,
   reviewCount,
   size = "sm",
 }: {

@@ -14,10 +14,14 @@ const sampleBooks: Book[] = [
     writer: "F. Scott Fitzgerald",
     coverUrl: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=400",
     category: "Fiction",
-    shortDescription:
+    description:
       "A tale of wealth, love, and disillusionment in 1920s New York, told through the eyes of Nick Carraway.",
+    pages: 180,
+    publishedDate: "1925-04-10",
     rating: 4.5,
     reviewCount: 128,
+    totalCopies: 5,
+    availableCopies: 3,
   },
   {
     id: "2",
@@ -25,10 +29,14 @@ const sampleBooks: Book[] = [
     writer: "James Clear",
     coverUrl: "https://images.unsplash.com/photo-1512820790803-83ca734da794?w=400",
     category: "Productivity",
-    shortDescription:
+    description:
       "A practical guide to building good habits and breaking bad ones, one small change at a time.",
+    pages: 320,
+    publishedDate: "2018-10-16",
     rating: 4.8,
     reviewCount: 342,
+    totalCopies: 8,
+    availableCopies: 6,
   },
 ];
 

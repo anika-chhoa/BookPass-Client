@@ -34,7 +34,7 @@ export function BookCard({
         </p>
 
         <p className="flex-1 font-body-md text-body text-sm text-on-surface-variant line-clamp-2">
-          {book.shortDescription}
+          {book.description}
         </p>
 
         <RatingStars rating={book.rating} reviewCount={book.reviewCount} />

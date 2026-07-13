@@ -4,9 +4,7 @@ export interface Book {
   writer: string;
   coverUrl: string;
   category: string;
-  shortDescription: string;
-  fullDescription: string;
-  price: number;
+  description: string;
   pages: number;
   publishedDate: string;
   rating: number;

@@ -25,10 +25,8 @@ export default function AddItem() {
         title: form.get("title") as string,
         writer: form.get("writer") as string,
         category: form.get("category") as string,
-        shortDescription: form.get("shortDescription") as string,
-        fullDescription: form.get("fullDescription") as string,
+        description: form.get("description") as string,
         coverUrl,
-        price: Number(form.get("price")),
         pages: Number(form.get("pages")),
         publishedDate: form.get("publishedDate") as string,
         totalCopies: Number(form.get("totalCopies")),
@@ -50,10 +48,8 @@ export default function AddItem() {
         <input name="title" required placeholder="Title" className={inputClass} />
         <input name="writer" required placeholder="Writer" className={inputClass} />
         <input name="category" required placeholder="Category (e.g. Fiction)" className={inputClass} />
-        <textarea name="shortDescription" required maxLength={300} placeholder="Short description (max 300 chars)" className={inputClass} rows={2} />
-        <textarea name="fullDescription" required placeholder="Full description" className={inputClass} rows={5} />
+        <textarea name="description" required placeholder="Description" className={inputClass} rows={5} />
         <div className="grid grid-cols-2 gap-md">
-          <input name="price" type="number" min="0" step="0.01" required placeholder="Price ($)" className={inputClass} />
           <input name="pages" type="number" min="1" required placeholder="Pages" className={inputClass} />
           <input name="publishedDate" type="date" required className={inputClass} />
           <input name="totalCopies" type="number" min="1" required placeholder="Total copies" className={inputClass} />
