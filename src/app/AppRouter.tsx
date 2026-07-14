@@ -11,6 +11,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./Home";
 import MyBookings from "@/features/dashboard/MyBookings";
 import Favorites from "@/features/dashboard/user/Favorites";
+import Pricing from "@/features/subscriptions/pages/Pricing";
 
 export function AppRouter() {
   return (
@@ -26,6 +27,7 @@ export function AppRouter() {
         <Route path="/books/:id" element={<BookDetails />} />
         <Route path="/my-bookings" element={<MyBookings />} />
         <Route path="/favorites" element={<Favorites />} />
+        <Route path="/pricing" element={<Pricing />} />
         <Route element={<AdminRoute />}>
           <Route path="/admin/add-item" element={<AddItem />} />
           <Route path="/admin/manage-books" element={<ManageBooks />} />

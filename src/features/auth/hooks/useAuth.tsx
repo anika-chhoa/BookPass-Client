@@ -8,6 +8,7 @@ interface AuthContextValue {
   register: (name: string, email: string, password: string) => Promise<void>;
   googleLogin: (idToken: string) => Promise<void>;
   logout: () => Promise<void>;
+  refreshUser: () => Promise<void>;
 }
 const AuthContext = createContext<AuthContextValue | null>(null);
 
@@ -23,8 +24,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const register = async (name: string, email: string, password: string) => setUser(await apiRegister(name, email, password));
   const googleLogin = async (idToken: string) => setUser(await apiGoogleLogin(idToken));
   const logout = async () => { await apiLogout(); setUser(null); };
+  const refreshUser = async () => setUser(await apiRefresh());
 
-  return <AuthContext.Provider value={{ user, loading, login, register, googleLogin, logout }}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={{ user, loading, login, register, googleLogin, logout, refreshUser }}>
+      {children}
+    </AuthContext.Provider>
+  );
 }
 
 export function useAuth() {

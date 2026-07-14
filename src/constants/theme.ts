@@ -51,7 +51,7 @@ export const PRICING_PLANS = [
   {
     id: "pro",
     name: "Pro",
-    price: 10,
+    price: 9.99,
     interval: "month",
     booksPerPeriod: 8,
     periodLabel: "month",
@@ -60,7 +60,7 @@ export const PRICING_PLANS = [
   {
     id: "premium",
     name: "Premium",
-    price: 96,
+    price: 89.99,
     interval: "year",
     booksPerPeriod: 120,
     periodLabel: "year",
