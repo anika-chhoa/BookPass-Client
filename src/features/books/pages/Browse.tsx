@@ -28,7 +28,7 @@ export default function Browse() {
   }, [search, category, sort, page]);
 
   return (
-    <Container className="py-xxl">
+    <Container className="py-xxl min-h-screen">
       <h1 className="font-headline-lg text-headline-lg text-primary mb-lg">Browse Books</h1>
       <div className="flex flex-wrap gap-md mb-lg">
         <input placeholder="Search by title or writer..." value={search} onChange={(e) => { setSearch(e.target.value); setPage(1); }} className={inputClass + " flex-1 min-w-[200px]"} />

@@ -4,6 +4,7 @@ import toast from "react-hot-toast";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { ImageUpload } from "../components/ImageUpload";
+import { WriterPicker } from "../components/WriterPicker";
 import { apiCreateBook } from "@/features/books/api/books.api";
 
 const inputClass = "rounded-xl border border-outline-variant px-md py-sm font-body-md w-full";
@@ -11,6 +12,7 @@ const inputClass = "rounded-xl border border-outline-variant px-md py-sm font-bo
 export default function AddItem() {
   const navigate = useNavigate();
   const [coverUrl, setCoverUrl] = useState("");
+  const [writerId, setWriterId] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -18,13 +20,14 @@ export default function AddItem() {
     e.preventDefault();
     setError("");
     if (!coverUrl) { setError("Please upload a cover image"); return; }
+    if (!writerId) { setError("Please select or create a writer"); return; }
 
     const form = new FormData(e.currentTarget);
     setLoading(true);
     try {
       const book = await apiCreateBook({
         title: form.get("title") as string,
-        writer: form.get("writer") as string,
+        writerId,
         category: form.get("category") as string,
         description: form.get("description") as string,
         coverUrl,
@@ -57,7 +60,7 @@ export default function AddItem() {
           {error && <p className="text-error font-label-sm text-label-sm">{error}</p>}
           <ImageUpload value={coverUrl} onChange={setCoverUrl} />
           <input name="title" required placeholder="Title" className={inputClass} />
-          <input name="writer" required placeholder="Writer" className={inputClass} />
+          <WriterPicker value={writerId} onChange={setWriterId} />
           <input name="category" required placeholder="Category (e.g. Fiction)" className={inputClass} />
           <textarea name="description" required placeholder="Description" className={inputClass} rows={5} />
           <div className="grid grid-cols-2 gap-md">

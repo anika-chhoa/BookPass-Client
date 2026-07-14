@@ -1,7 +1,9 @@
 export interface Book {
   id: string;
   title: string;
-  writer: string;
+  writerId: string;
+  writerName: string;
+  writerPhotoUrl: string;
   coverUrl: string;
   category: string;
   description: string;
@@ -10,5 +12,4 @@ export interface Book {
   rating: number;
   reviewCount: number;
   totalCopies: number;
-  availableCopies: number;
 }
