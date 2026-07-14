@@ -1,10 +1,20 @@
 import { apiFetch, setAccessToken } from "@/lib/apiClient";
 
-export interface AuthUser { id: string; name: string; email: string; role: "user" | "admin"; plan: "free" | "pro" | "premium"; }
+export interface AuthUser {
+  id: string;
+  name: string;
+  email: string;
+  role: "user" | "admin";
+  plan: "free" | "pro" | "premium";
+  avatarUrl: string;
+}
 interface AuthResult { accessToken: string; user: AuthUser; }
 
-export async function apiRegister(name: string, email: string, password: string) {
-  const data = await apiFetch<AuthResult>("/auth/register", { method: "POST", body: JSON.stringify({ name, email, password }) });
+export async function apiRegister(name: string, email: string, password: string, avatarUrl?: string) {
+  const data = await apiFetch<AuthResult>("/auth/register", {
+    method: "POST",
+    body: JSON.stringify({ name, email, password, avatarUrl }),
+  });
   setAccessToken(data.accessToken);
   return data.user;
 }
@@ -26,4 +36,12 @@ export async function apiRefresh() {
 export async function apiLogout() {
   await apiFetch("/auth/logout", { method: "POST" });
   setAccessToken(null);
+}
+export async function apiUpdateProfile(updates: { name?: string; avatarUrl?: string }) {
+  return apiFetch<AuthUser>("/auth/me", { method: "PATCH", body: JSON.stringify(updates) });
+}
+export async function apiUploadAvatar(file: File) {
+  const formData = new FormData();
+  formData.append("image", file);
+  return apiFetch<{ url: string }>("/upload/avatar", { method: "POST", body: formData });
 }

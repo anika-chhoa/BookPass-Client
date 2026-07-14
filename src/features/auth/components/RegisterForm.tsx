@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/Button";
 import { useAuth } from "../hooks/useAuth";
 import { GoogleSignInButton } from "./GoogleSignInButton";
+import { AvatarUpload } from "./AvatarUpload";
 
 export function RegisterForm() {
   const { register } = useAuth();
@@ -10,6 +11,7 @@ export function RegisterForm() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [avatarUrl, setAvatarUrl] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -18,7 +20,7 @@ export function RegisterForm() {
     setError("");
     setLoading(true);
     try {
-      await register(name, email, password);
+      await register(name, email, password, avatarUrl || undefined);
       navigate("/");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Registration failed");
@@ -30,6 +32,7 @@ export function RegisterForm() {
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-md max-w-sm w-full">
       {error && <p className="text-error font-label-sm text-label-sm">{error}</p>}
+      <AvatarUpload value={avatarUrl} onChange={setAvatarUrl} />
       <input
         required
         placeholder="Full name"
