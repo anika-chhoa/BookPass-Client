@@ -3,6 +3,7 @@ import { Card } from "@/components/ui/Card";
 import { AvatarUpload } from "@/features/auth/components/AvatarUpload";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 import { useState, type FormEvent } from "react";
+import toast from "react-hot-toast";
 
 function PlanBadge({ plan }: { plan: string }) {
   return (
@@ -17,9 +18,10 @@ function ProfileView({ onEdit }: { onEdit: () => void }) {
   if (!user) return null;
 
   return (
+    <div className="min-h-screen">
     <Card
       hoverable={false}
-      className="max-w-md mx-auto items-center text-center p-16"
+      className="max-w-md mx-auto items-center text-center px-16 py-20"
     >
       <img
         src={user.avatarUrl}
@@ -43,6 +45,7 @@ function ProfileView({ onEdit }: { onEdit: () => void }) {
         Edit Profile
       </Button>
     </Card>
+    </div>
   );
 }
 
@@ -59,15 +62,19 @@ function ProfileEditForm({ onDone }: { onDone: () => void }) {
     setLoading(true);
     try {
       await updateUser({ name, avatarUrl });
+      toast.success(`Profile updated — welcome, ${name}!`);
       onDone();
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to update profile");
+      const message = err instanceof Error ? err.message : "Failed to update profile";
+      setError(message);
+      toast.error(message);
     } finally {
       setLoading(false);
     }
   };
 
   return (
+    <div className="min-h-screen">
     <Card hoverable={false} className="max-w-md mx-auto">
       <div className="flex items-center justify-between mb-md">
         <h2 className="font-headline-md text-body-lg text-on-surface">
@@ -110,6 +117,7 @@ function ProfileEditForm({ onDone }: { onDone: () => void }) {
         </Button>
       </form>
     </Card>
+    </div>
   );
 }
 

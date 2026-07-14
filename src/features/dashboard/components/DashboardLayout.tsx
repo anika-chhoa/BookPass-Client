@@ -3,35 +3,48 @@ import { Container } from "@/components/layout/Container";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/features/auth/hooks/useAuth";
 
-const NAV_ITEMS = [
+const USER_NAV_ITEMS = [
   { to: "/dashboard", label: "Overview", end: true },
   { to: "/my-bookings", label: "My Bookings", end: false },
   { to: "/favorites", label: "Favorites", end: false },
   { to: "/dashboard/profile", label: "Profile", end: false },
 ];
 
+const ADMIN_NAV_ITEMS = [
+  { to: "/admin/overview", label: "Overview", end: false },
+  { to: "/admin/manage-books", label: "Manage Books", end: false },
+  { to: "/admin/add-item", label: "Add Book", end: false },
+  { to: "/dashboard/users", label: "All Users", end: false },
+  { to: "/dashboard/bookings", label: "Booking History", end: false },
+  { to: "/dashboard/payments", label: "Payments", end: false },
+  { to: "/dashboard/profile", label: "Profile", end: false },
+];
+
 export default function DashboardLayout() {
   const { user } = useAuth();
+  const isAdmin = user?.role === "admin";
+  const navItems = isAdmin ? ADMIN_NAV_ITEMS : USER_NAV_ITEMS;
 
   return (
-    <Container className="py-xl min-h-screen">
+    <Container className="py-xxl">
       <div className="flex items-center gap-md mb-lg">
-        <div className="flex flex-col justify-center items-center gap-4 px-lg">
         <img
           src={user?.avatarUrl}
           alt={user?.name}
           className="w-12 h-12 rounded-full object-cover border-2 border-outline-variant"
         />
-        <p className="font-label-sm text-label-sm text-on-surface-variant">{user?.name} · {user?.plan} plan</p>
+        <div>
+          <h1 className="font-headline-lg text-headline-lg text-primary">
+            {isAdmin ? "Admin Dashboard" : "Dashboard"}
+          </h1>
+          <p className="font-label-sm text-label-sm text-on-surface-variant">
+            {user?.name} · {isAdmin ? "Administrator" : `${user?.plan} plan`}
+          </p>
         </div>
-        {/* <div>
-          <h1 className="font-headline-lg text-headline-lg text-primary">Dashboard</h1>
-          <p className="font-label-sm text-label-sm text-on-surface-variant">{user?.name} · {user?.plan} plan</p>
-        </div> */}
       </div>
 
       <div className="flex md:hidden gap-sm overflow-x-auto pb-sm mb-lg -mx-md px-md">
-        {NAV_ITEMS.map((item) => (
+        {navItems.map((item) => (
           <NavLink
             key={item.to}
             to={item.to}
@@ -50,7 +63,7 @@ export default function DashboardLayout() {
 
       <div className="flex flex-col md:flex-row gap-xl">
         <nav className="hidden md:flex flex-col gap-xs w-48 shrink-0">
-          {NAV_ITEMS.map((item) => (
+          {navItems.map((item) => (
             <NavLink
               key={item.to}
               to={item.to}
