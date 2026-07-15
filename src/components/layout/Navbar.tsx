@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, ChevronDown, LogOut, User } from "lucide-react";
 import { Button } from "@/components/ui/Button";
@@ -20,14 +20,36 @@ const LOGGED_IN_LINKS = [
   { to: "/blog", label: "Blog" },
 ];
 
+function NavLink({ to, label, isActive }: { to: string; label: string; isActive: boolean }) {
+  return (
+    <Link to={to} className="relative py-xs group">
+      <span
+        className={`font-label-md text-label-md transition-colors ${
+          isActive ? "text-primary" : "text-on-surface-variant group-hover:text-primary"
+        }`}
+      >
+        {label}
+      </span>
+      <span
+        className={`absolute left-0 -bottom-1 h-[2px] bg-primary transition-all duration-300 ease-out ${
+          isActive ? "w-full" : "w-0 group-hover:w-full"
+        }`}
+      />
+    </Link>
+  );
+}
+
 export function Navbar() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [avatarOpen, setAvatarOpen] = useState(false);
 
   const dashboardPath = user?.role === "admin" ? "/admin/overview" : "/dashboard";
   const navLinks = user ? LOGGED_IN_LINKS : LOGGED_OUT_LINKS;
+
+  const isLinkActive = (to: string) => (to === "/" ? location.pathname === "/" : location.pathname.startsWith(to));
 
   const handleLogout = async () => {
     setAvatarOpen(false);
@@ -43,24 +65,16 @@ export function Navbar() {
       className="fixed top-0 left-0 right-0 z-50 h-14 w-full bg-surface/95 backdrop-blur-md border-b border-outline-variant"
     >
       <div className="max-w-[1280px] mx-auto h-full flex items-center justify-between px-lg md:px-margin-desktop">
-        <Link to="/" className="font-headline-md text-headline-md font-bold text-primary shrink-0">
+        <Link to="/" className="font-headline-md text-headline-md font-bold text-primary shrink-0 transition-opacity hover:opacity-80">
           OpenShelf
         </Link>
 
         <div className="hidden lg:flex items-center gap-lg">
           {navLinks.map((link) => (
-            <Link
-              key={link.to}
-              to={link.to}
-              className="text-on-surface-variant hover:text-primary transition-colors font-label-md text-label-md"
-            >
-              {link.label}
-            </Link>
+            <NavLink key={link.to} to={link.to} label={link.label} isActive={isLinkActive(link.to)} />
           ))}
           {user && (
-            <Link to={dashboardPath} className="text-on-surface-variant hover:text-primary transition-colors font-label-md text-label-md">
-              Dashboard
-            </Link>
+            <NavLink to={dashboardPath} label="Dashboard" isActive={isLinkActive(dashboardPath)} />
           )}
         </div>
 
@@ -72,7 +86,7 @@ export function Navbar() {
                 className="flex items-center gap-sm px-sm py-1 rounded-full hover:bg-surface-container-low transition-colors"
               >
                 <img src={user.avatarUrl} alt={user.name} className="w-9 h-9 rounded-full object-cover border border-outline-variant" />
-                <ChevronDown className="w-4 h-4 text-on-surface-variant" />
+                <ChevronDown className={`w-4 h-4 text-on-surface-variant transition-transform duration-200 ${avatarOpen ? "rotate-180" : ""}`} />
               </button>
               <AnimatePresence>
                 {avatarOpen && (
@@ -90,7 +104,7 @@ export function Navbar() {
                         <p className="font-label-sm text-label-sm text-on-surface-variant line-clamp-1">{user.email}</p>
                       </div>
                       <Link
-                        to={`${dashboardPath === "/dashboard" ? "/dashboard/profile" : "/dashboard/profile"}`}
+                        to="/dashboard/profile"
                         onClick={() => setAvatarOpen(false)}
                         className="flex items-center gap-sm px-md py-sm font-label-sm text-label-sm text-on-surface hover:bg-surface-container-low transition-colors"
                       >
@@ -139,7 +153,11 @@ export function Navbar() {
                   key={link.to}
                   to={link.to}
                   onClick={() => setMobileOpen(false)}
-                  className="py-sm font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors"
+                  className={`py-sm font-label-md text-label-md transition-colors border-l-2 pl-sm ${
+                    isLinkActive(link.to)
+                      ? "text-primary border-primary"
+                      : "text-on-surface-variant border-transparent hover:text-primary hover:border-primary/40"
+                  }`}
                 >
                   {link.label}
                 </Link>
@@ -149,21 +167,25 @@ export function Navbar() {
                   <Link
                     to={dashboardPath}
                     onClick={() => setMobileOpen(false)}
-                    className="py-sm font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors"
+                    className={`py-sm font-label-md text-label-md transition-colors border-l-2 pl-sm ${
+                      isLinkActive(dashboardPath)
+                        ? "text-primary border-primary"
+                        : "text-on-surface-variant border-transparent hover:text-primary hover:border-primary/40"
+                    }`}
                   >
                     Dashboard
                   </Link>
                   <Link
                     to="/dashboard/profile"
                     onClick={() => setMobileOpen(false)}
-                    className="py-sm font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors"
+                    className="py-sm font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors border-l-2 border-transparent hover:border-primary/40 pl-sm"
                   >
                     Profile
                   </Link>
                   <Link
                     to="/privacy"
                     onClick={() => setMobileOpen(false)}
-                    className="py-sm font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors"
+                    className="py-sm font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors border-l-2 border-transparent hover:border-primary/40 pl-sm"
                   >
                     Privacy & Terms
                   </Link>

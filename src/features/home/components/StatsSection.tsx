@@ -1,12 +1,37 @@
-import { motion } from "framer-motion";
-import { BookMarked, Users, MessageSquareQuote } from "lucide-react";
+import { animate, motion, useInView } from "framer-motion";
+import { BookMarked, MessageSquareQuote, Users } from "lucide-react";
+import { useEffect, useRef } from "react";
 import type { PublicStats } from "../api/home.api";
+
+function CountUp({ value }: { value: number }) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const isInView = useInView(ref, { once: true, margin: "-50px" });
+
+  useEffect(() => {
+    if (!isInView || !ref.current) return;
+    const node = ref.current;
+    const controls = animate(0, value, {
+      duration: 1.6,
+      ease: "easeOut",
+      onUpdate: (latest) => {
+        node.textContent = Math.round(latest).toLocaleString() + "+";
+      },
+    });
+    return () => controls.stop();
+  }, [isInView, value]);
+
+  return <span ref={ref}>0+</span>;
+}
 
 export function StatsSection({ stats }: { stats: PublicStats | null }) {
   const items = [
     { label: "Books Available", value: stats?.totalBooks, icon: BookMarked },
     { label: "Active Members", value: stats?.totalUsers, icon: Users },
-    { label: "Reviews Written", value: stats?.totalReviews, icon: MessageSquareQuote },
+    {
+      label: "Reviews Written",
+      value: stats?.totalReviews,
+      icon: MessageSquareQuote,
+    },
   ];
 
   return (
@@ -24,7 +49,7 @@ export function StatsSection({ stats }: { stats: PublicStats | null }) {
             >
               <s.icon className="w-8 h-8 text-secondary" strokeWidth={1.75} />
               <span className="font-headline-lg text-headline-lg">
-                {s.value !== undefined ? `${s.value.toLocaleString()}+` : "—"}
+                {s.value !== undefined ? <CountUp value={s.value} /> : "—"}
               </span>
               <span className="font-label-md text-label-md text-white/75 tracking-wider uppercase">
                 {s.label}

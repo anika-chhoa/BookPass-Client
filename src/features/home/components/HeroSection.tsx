@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/Button";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ArrowRight, ChevronLeft, ChevronRight, Search } from "lucide-react";
 import { useEffect, useState, type FormEvent } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 interface Slide {
   image: string;
@@ -172,7 +172,7 @@ export function HeroSection() {
           transition={{ duration: 0.6, delay: 0.25 }}
           className="flex flex-col items-center gap-sm"
         >
-          <a href="/books" className="group relative inline-block">
+          <Link to="/books" className="group relative inline-block">
             <Button
               variant="secondary"
               size="lg"
@@ -188,7 +188,7 @@ export function HeroSection() {
                 className="absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out bg-gradient-to-r from-transparent via-white/30 to-transparent"
               />
             </Button>
-          </a>
+          </Link>
 
           <p className="text-white/60 font-body-sm text-xs tracking-wide">
             Free to join · No late fees · 24/7 online access

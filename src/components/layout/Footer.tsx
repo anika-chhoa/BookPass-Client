@@ -1,5 +1,6 @@
 import { Mail, Phone } from "lucide-react";
 import { FaFacebook, FaLinkedin } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const CONTACT_EMAIL = "chhoa.anika07@gmail.com";
 const CONTACT_PHONE = "+8801761651313";
@@ -12,7 +13,7 @@ export function Footer() {
       <div className="max-w-[1280px] mx-auto grid grid-cols-1 md:grid-cols-4 gap-lg px-margin-mobile md:px-margin-desktop py-xxl">
         <div className="flex flex-col gap-md">
           <span className="font-headline-md text-headline-md font-bold text-secondary">
-            OpenShelf
+            <Link to="/">OpenShelf</Link>
           </span>
           <p className="font-body-md text-white/80">
             Empowering readers through a modern, curated, and accessible
@@ -22,30 +23,10 @@ export function Footer() {
 
         <div className="flex flex-col gap-sm">
           <h4 className="font-headline-md text-body-lg mb-sm">Quick Links</h4>
-          <a
-            className="font-label-sm text-white/80 hover:text-secondary transition-colors"
-            href="/books"
-          >
-            Browse Catalog
-          </a>
-          <a
-            className="font-label-sm text-white/80 hover:text-secondary transition-colors"
-            href="/pricing"
-          >
-            Membership Plans
-          </a>
-          <a
-            className="font-label-sm text-white/80 hover:text-secondary transition-colors"
-            href="/about"
-          >
-            About Us
-          </a>
-          <a
-            className="font-label-sm text-white/80 hover:text-secondary transition-colors"
-            href="/contact"
-          >
-            Contact
-          </a>
+          <Link className="font-label-sm text-white/80 hover:text-secondary transition-colors" to="/books">Browse Catalog</Link>
+          <Link className="font-label-sm text-white/80 hover:text-secondary transition-colors" to="/pricing">Membership Plans</Link>
+          <Link className="font-label-sm text-white/80 hover:text-secondary transition-colors" to="/about">About Us</Link>
+          <Link className="font-label-sm text-white/80 hover:text-secondary transition-colors" to="/contact">Contact</Link>
         </div>
 
         <div className="flex flex-col gap-sm">
@@ -89,18 +70,8 @@ export function Footer() {
 
         <div className="flex flex-col gap-md">
           <h4 className="font-headline-md text-body-lg">Legal</h4>
-          <a
-            className="font-label-sm text-white/80 hover:text-secondary transition-colors"
-            href="/privacy"
-          >
-            Privacy Policy
-          </a>
-          <a
-            className="font-label-sm text-white/80 hover:text-secondary transition-colors"
-            href="/privacy"
-          >
-            Terms of Service
-          </a>
+          <Link className="font-label-sm text-white/80 hover:text-secondary transition-colors" to="/privacy">Privacy Policy</Link>
+          <Link className="font-label-sm text-white/80 hover:text-secondary transition-colors" to="/privacy">Terms of Service</Link>
         </div>
       </div>
       <div className="max-w-[1280px] mx-auto px-margin-desktop py-lg border-t border-white/10 text-center">

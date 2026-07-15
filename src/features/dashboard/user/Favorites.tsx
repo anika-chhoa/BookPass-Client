@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import toast from "react-hot-toast";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { SkeletonTable } from "@/components/ui/Skeleton";
@@ -15,17 +16,25 @@ export default function Favorites() {
   };
   useEffect(load, []);
 
-  const handleRemove = async (bookId: string) => {
+  const handleRemove = async (bookId: string, bookTitle: string) => {
     setRemovingId(bookId);
-    try { await apiRemoveFavorite(bookId); setFavorites((prev) => prev?.filter((f) => f.bookId !== bookId) ?? null); }
-    catch (err) { setError(err instanceof Error ? err.message : "Failed to remove favorite"); }
-    finally { setRemovingId(null); }
+    try {
+      await apiRemoveFavorite(bookId);
+      setFavorites((prev) => prev?.filter((f) => f.bookId !== bookId) ?? null);
+      toast.success(`"${bookTitle}" removed from favorites`);
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "Failed to remove favorite";
+      setError(message);
+      toast.error(message);
+    } finally {
+      setRemovingId(null);
+    }
   };
 
   return (
     <div className="flex flex-col gap-lg min-h-screen">
       <div>
-        <h1 className="font-headline-lg text-headline-lg text-primary">Favorites</h1>
+        <h1 className="font-headline-md text-headline-md text-primary">Favorites</h1>
         <p className="font-label-sm text-label-sm text-on-surface-variant mt-xs">
           Books you've saved for later.
         </p>
@@ -80,7 +89,7 @@ export default function Favorites() {
                         variant="outline"
                         size="sm"
                         isLoading={removingId === f.bookId}
-                        onClick={() => handleRemove(f.bookId)}
+                        onClick={() => handleRemove(f.bookId, f.bookTitle)}
                       >
                         Remove
                       </Button>

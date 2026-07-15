@@ -15,6 +15,7 @@ import {
 import { ReviewSection } from "@/features/reviews/components/ReviewSection";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import toast from "react-hot-toast";
 import { BookGallery } from "../components/BookGallery";
 
 export default function BookDetails() {
@@ -25,7 +26,6 @@ export default function BookDetails() {
   const [related, setRelated] = useState<Book[]>([]);
   const [error, setError] = useState("");
   const [bookingLoading, setBookingLoading] = useState(false);
-  const [bookingMessage, setBookingMessage] = useState("");
   const [favoriteLoading, setFavoriteLoading] = useState(false);
   const [isFavorited, setIsFavorited] = useState(false);
 
@@ -51,25 +51,24 @@ export default function BookDetails() {
   };
 
   const handleBookNow = () =>
-  requireAuth(async () => {
-    if (!book) return;
-    setBookingLoading(true);
-    setBookingMessage("");
-    try {
-      await apiCreateBooking(book.id);
-      setBookingMessage("Booked! Check My Bookings to see your due date.");
-      setBook({ ...book, totalCopies: book.totalCopies - 1 });
-    } catch (err) {
-      const message = err instanceof Error ? err.message : "Booking failed";
-      if (message.toLowerCase().includes("plan's limit")) {
-        navigate("/pricing", { state: { limitReached: true } });
-        return;
+    requireAuth(async () => {
+      if (!book) return;
+      setBookingLoading(true);
+      try {
+        await apiCreateBooking(book.id);
+        toast.success(`"${book.title}" booked! Check My Bookings for your due date.`);
+        navigate("/my-bookings");
+      } catch (err) {
+        const message = err instanceof Error ? err.message : "Booking failed";
+        if (message.toLowerCase().includes("plan's limit")) {
+          navigate("/pricing", { state: { limitReached: true } });
+          return;
+        }
+        toast.error(message);
+      } finally {
+        setBookingLoading(false);
       }
-      setBookingMessage(message);
-    } finally {
-      setBookingLoading(false);
-    }
-  });
+    });
 
   const handleFavorite = () =>
     requireAuth(async () => {
@@ -79,14 +78,15 @@ export default function BookDetails() {
         if (isFavorited) {
           await apiRemoveFavorite(book.id);
           setIsFavorited(false);
+          toast.success(`"${book.title}" removed from favorites`);
         } else {
           await apiAddFavorite(book.id);
           setIsFavorited(true);
+          toast.success(`"${book.title}" added to favorites`);
         }
       } catch (err) {
-        setBookingMessage(
-          err instanceof Error ? err.message : "Failed to update favorites",
-        );
+        const message = err instanceof Error ? err.message : "Failed to update favorites";
+        toast.error(message);
       } finally {
         setFavoriteLoading(false);
       }
@@ -147,12 +147,6 @@ export default function BookDetails() {
             </span>
             <span>{book.totalCopies} available</span>
           </div>
-
-          {bookingMessage && (
-            <p className="font-label-sm text-label-sm text-primary">
-              {bookingMessage}
-            </p>
-          )}
 
           <div className="flex gap-md mt-md">
             <Button
