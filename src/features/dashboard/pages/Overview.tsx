@@ -5,7 +5,7 @@ import { SkeletonCard } from "@/components/ui/Skeleton";
 import { apiGetDashboardStats, type DashboardStats } from "../api/dashboard.api";
 
 const PRIMARY = "#204e2b";
-const SECONDARY = "#bc4749";
+// const SECONDARY = "#bc4749";
 
 function StatCard({ label, value, danger }: { label: string; value: number; danger?: boolean }) {
   return (
@@ -37,7 +37,7 @@ export default function Overview() {
   const radialData = [{ name: "used", value: usagePercent, fill: PRIMARY }];
 
   return (
-    <div className="flex flex-col gap-lg">
+    <div className="flex flex-col gap-lg min-h-screen">
       <div className="grid grid-cols-2 md:grid-cols-4 gap-md">
         <StatCard label="Active Bookings" value={stats.activeBookings} />
         <StatCard label="Overdue" value={stats.overdueBookings} danger />

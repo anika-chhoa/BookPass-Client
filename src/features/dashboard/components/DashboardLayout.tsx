@@ -1,4 +1,5 @@
-import { NavLink, Outlet } from "react-router-dom";
+import { ArrowLeft } from "lucide-react";
+import { Link, NavLink, Outlet } from "react-router-dom";
 import { Container } from "@/components/layout/Container";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/features/auth/hooks/useAuth";
@@ -12,8 +13,8 @@ const USER_NAV_ITEMS = [
 
 const ADMIN_NAV_ITEMS = [
   { to: "/admin/overview", label: "Overview", end: false },
-  { to: "/admin/manage-books", label: "Manage Books", end: false },
-  { to: "/admin/add-item", label: "Add Book", end: false },
+  { to: "/items/manage", label: "Manage Books", end: false },
+  { to: "/items/add", label: "Add Book", end: false },
   { to: "/dashboard/users", label: "All Users", end: false },
   { to: "/dashboard/bookings", label: "Booking History", end: false },
   { to: "/dashboard/payments", label: "Payments", end: false },
@@ -26,7 +27,14 @@ export default function DashboardLayout() {
   const navItems = isAdmin ? ADMIN_NAV_ITEMS : USER_NAV_ITEMS;
 
   return (
-    <Container className="py-xxl">
+    <Container className="py-lg min-h-screen">
+      <Link
+        to="/"
+        className="inline-flex items-center gap-xs font-label-sm text-label-sm text-on-surface-variant hover:text-primary transition-colors mb-sm"
+      >
+        <ArrowLeft className="w-4 h-4" /> Back to Home
+      </Link>
+
       <div className="flex items-center gap-md mb-lg">
         <img
           src={user?.avatarUrl}

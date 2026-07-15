@@ -6,8 +6,8 @@ export interface Writer {
   photoUrl: string;
 }
 
-export async function apiListWriters() {
-  return apiFetch<Writer[]>("/writers");
+export async function apiListWriters(limit?: number) {
+  return apiFetch<Writer[]>(`/writers${limit ? `?limit=${limit}` : ""}`);
 }
 export async function apiCreateWriter(name: string, photoUrl: string) {
   return apiFetch<Writer>("/writers", { method: "POST", body: JSON.stringify({ name, photoUrl }) });

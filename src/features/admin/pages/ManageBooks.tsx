@@ -53,7 +53,7 @@ export default function ManageBooks() {
             View, and remove books from the catalog.
           </p>
         </div>
-        <Link to="/admin/add-item"><Button size="sm">Add Book</Button></Link>
+        <Link to="/items/add"><Button size="sm">Add Book</Button></Link>
       </div>
 
       {error && <p className="text-error font-label-sm text-label-sm">{error}</p>}

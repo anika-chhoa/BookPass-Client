@@ -31,7 +31,7 @@ export default function Pricing() {
   };
 
   return (
-    <Container className="py-xxl">
+    <Container className="py-xxl min-h-screen">
       <h1 className="font-headline-lg text-headline-lg text-primary mb-sm text-center">
         Plans for every kind of reader
       </h1>

@@ -36,7 +36,7 @@ export default function AdminBookings() {
   }, [page]);
 
   return (
-    <div className="flex flex-col gap-lg">
+    <div className="flex flex-col gap-lg min-h-screen">
       <div>
         <h1 className="font-headline-lg text-headline-md text-primary">Booking History</h1>
         <p className="font-label-sm text-label-sm text-on-surface-variant mt-xs">

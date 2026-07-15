@@ -4,6 +4,7 @@ import toast from "react-hot-toast";
 import { Button } from "@/components/ui/Button";
 import { Card } from "@/components/ui/Card";
 import { ImageUpload } from "../components/ImageUpload";
+import { MultiImageUpload } from "../components/MultiImageUpload";
 import { WriterPicker } from "../components/WriterPicker";
 import { apiCreateBook } from "@/features/books/api/books.api";
 
@@ -12,6 +13,7 @@ const inputClass = "rounded-xl border border-outline-variant px-md py-sm font-bo
 export default function AddItem() {
   const navigate = useNavigate();
   const [coverUrl, setCoverUrl] = useState("");
+  const [images, setImages] = useState<string[]>([]);
   const [writerId, setWriterId] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -29,14 +31,16 @@ export default function AddItem() {
         title: form.get("title") as string,
         writerId,
         category: form.get("category") as string,
+        shortDescription: form.get("shortDescription") as string,
         description: form.get("description") as string,
         coverUrl,
+        images,
         pages: Number(form.get("pages")),
         publishedDate: form.get("publishedDate") as string,
         totalCopies: Number(form.get("totalCopies")),
       });
       toast.success(`"${book.title}" was added to the catalog`);
-      navigate("/admin/manage-books");
+      navigate("/items/manage");
     } catch (err) {
       const message = err instanceof Error ? err.message : "Failed to create book";
       setError(message);
@@ -59,10 +63,12 @@ export default function AddItem() {
         <form onSubmit={handleSubmit} className="flex flex-col gap-md">
           {error && <p className="text-error font-label-sm text-label-sm">{error}</p>}
           <ImageUpload value={coverUrl} onChange={setCoverUrl} />
+          <MultiImageUpload value={images} onChange={setImages} />
           <input name="title" required placeholder="Title" className={inputClass} />
           <WriterPicker value={writerId} onChange={setWriterId} />
           <input name="category" required placeholder="Category (e.g. Fiction)" className={inputClass} />
-          <textarea name="description" required placeholder="Description" className={inputClass} rows={5} />
+          <textarea name="shortDescription" required maxLength={300} placeholder="Short description (max 300 characters, shown on book cards)" className={inputClass} rows={2} />
+          <textarea name="description" required placeholder="Full description" className={inputClass} rows={5} />
           <div className="grid grid-cols-2 gap-md">
             <input name="pages" type="number" min="1" required placeholder="Pages" className={inputClass} />
             <input name="publishedDate" type="date" required className={inputClass} />

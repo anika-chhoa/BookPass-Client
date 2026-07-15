@@ -44,3 +44,27 @@ export function SkeletonTable({ rows = 5, columns = 4 }: { rows?: number; column
     </div>
   );
 }
+
+export function SkeletonBookDetails() {
+  return (
+    <div className="grid grid-cols-1 md:grid-cols-[300px_1fr] gap-xl mb-xxl">
+      <Skeleton className="w-full aspect-[3/4] !rounded-xl" />
+      <div className="flex flex-col gap-md">
+        <Skeleton className="h-6 w-24" />
+        <Skeleton className="h-9 w-3/4" />
+        <Skeleton className="h-5 w-40" />
+        <Skeleton className="h-4 w-32" />
+        <SkeletonText lines={4} />
+        <div className="flex gap-xl">
+          <Skeleton className="h-4 w-20" />
+          <Skeleton className="h-4 w-32" />
+          <Skeleton className="h-4 w-24" />
+        </div>
+        <div className="flex gap-md mt-md">
+          <Skeleton className="h-11 w-32" />
+          <Skeleton className="h-11 w-40" />
+        </div>
+      </div>
+    </div>
+  );
+}
